@@ -64,7 +64,7 @@ detect_and_update_package_manager() {
         elif [[ "$OS" == "CentOS"* ]]; then
         PKG_MANAGER="yum"
         $PKG_MANAGER update -y
-        $PKG_MANAGER epel-release -y
+        $PKG_MANAGER install epel-release -y
         elif [ "$OS" == "Fedora"* ]; then
         PKG_MANAGER="dnf"
         $PKG_MANAGER update
@@ -118,7 +118,7 @@ install_docker() {
 }
 
 install_marzban_script() {
-    FETCH_REPO="Gozargah/Marzban-scripts"
+    FETCH_REPO="alex1528/Marzban-scripts"
     SCRIPT_URL="https://github.com/$FETCH_REPO/raw/master/marzban.sh"
     colorized_echo blue "Installing marzban script"
     curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
@@ -127,7 +127,7 @@ install_marzban_script() {
 
 install_marzban() {
     # Fetch releases
-    FILES_URL_PREFIX="https://raw.githubusercontent.com/Gozargah/Marzban/master"
+    FILES_URL_PREFIX="https://raw.githubusercontent.com/alex1528/Marzban/master"
     
     mkdir -p "$DATA_DIR"
     mkdir -p "$APP_DIR"
@@ -137,7 +137,7 @@ install_marzban() {
     colorized_echo green "File saved in $APP_DIR/docker-compose.yml"
     
     colorized_echo blue "Fetching .env file"
-    curl -sL "$FILES_URL_PREFIX/.env.example" -o "$APP_DIR/.env"
+    curl -sL "$FILES_URL_PREFIX/.env" -o "$APP_DIR/.env"
     sed -i 's/^# \(XRAY_JSON = .*\)$/\1/' "$APP_DIR/.env"
     sed -i 's/^# \(SQLALCHEMY_DATABASE_URL = .*\)$/\1/' "$APP_DIR/.env"
     sed -i 's~\(XRAY_JSON = \).*~\1"/var/lib/marzban/xray_config.json"~' "$APP_DIR/.env"
@@ -208,7 +208,7 @@ marzban_cli() {
 
 
 update_marzban_script() {
-    FETCH_REPO="Gozargah/Marzban-scripts"
+    FETCH_REPO="alex1528/Marzban-scripts"
     SCRIPT_URL="https://github.com/$FETCH_REPO/raw/master/marzban.sh"
     colorized_echo blue "Updating marzban script"
     curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzban
